@@ -1,6 +1,6 @@
 {
 	"name": "@yeasoft/parseutils",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Utilities and express middleware for parsing parameters",
 	"author": {
 		"name": "Leo Moll"
@@ -35,7 +35,7 @@
 		"@types/express": "^4.17.13",
 		"@types/node": "^18.0.3",
 		"@yeasoft/baseutils": "^0.42.0",
-		"@yeasoft/fetchutils": "^0.18.0",
+		"@yeasoft/fetchutils": "^0.19.0",
 		"deepmerge": "^4.2.2"
 	},
 	"devDependencies": {
