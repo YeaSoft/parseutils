@@ -22,11 +22,16 @@ export type ParserFunction = ( params: Object ) => Object;
  * @property stringify - An optional array or comma separated list of parametres to JSON.stringify (default: empty)
  */
 export interface ParserOptions {
-	methods?: string | string[],
-	merge?: string | string[],
-	errormode?: 'exception' | 'handle' | 'param',
-	errortitle?: string,
-	stringify?: boolean
+	/** An optional array or comma separated list of allowed methods (no default: all methods allowed) */
+	methods?: string | string[];
+	/** An optional array or comma separated list describing the merge strategy for parameters (default: merge all -> params, query, body) */
+	merge?: string | string[];
+	/** Defines how to handle errors: with `exception` an exception is thrown and the handling is done by express, with `handle` the result is handled internally using a `resultHelper`, with `param` the error information is returned in `res.params` (default: exception) */
+	errormode?: 'exception' | 'handle' | 'param';
+	/** Alternative title of the error in response if any error occurs (default: none) */
+	errortitle?: string;
+	/** An optional array or comma separated list of parametres to JSON.stringify (default: empty) */
+	stringify?: string | string[];
 }
 
 /**
@@ -39,16 +44,19 @@ export interface ParserOptions {
  * @property stringify - An array of parametres to JSON.stringify
  */
 export interface ConsolidatedParserOptions {
-	methods: string[],
-	merge: string[],
-	errormode: 'exception' | 'handle' | 'param',
-	errortitle?: string,
-	stringify: boolean
+	/** An array of allowed methods. If array is empty, all methods are allowed */
+	methods: string[];
+	/** An array describing the merge strategy for parameters */
+	merge: string[];
+	/** Defines how to handle errors: with `exception` an exception is thrown and the handling is done by express, with `handle` the result is handled internally using a `resultHelper`, with `param` the error information is returned in `res.params` */
+	errormode: 'exception' | 'handle' | 'param';
+	/** Alternative title of the error in response if any error occurs (default: none) */
+	errortitle?: string;
+	/** An array of parametres to JSON.stringify */
+	stringify: string[];
 }
 
-/**
- *
- */
+/** The parameter parser class */
 export class ParamParser {
 	readonly options: ConsolidatedParserOptions;
 
