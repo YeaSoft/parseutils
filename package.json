@@ -1,6 +1,6 @@
 {
 	"name": "@yeasoft/parseutils",
-	"version": "0.1.1",
+	"version": "1.0.0",
 	"description": "Utilities and express middleware for parsing parameters",
 	"author": {
 		"name": "Leo Moll"
