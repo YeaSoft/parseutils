@@ -111,7 +111,7 @@ ParamParser.consolidateOptions = ( value ) => {
 	let options = getValidObj( value, {} );
 	options.methods = getValidTokens( options.methods );
 	options.merge = getValidTokens( options.merge === 'all' ? undefined : options.merge, [ 'params', 'query', 'body' ] );
-	options.errormode = [ 'exception', 'handle', 'param' ].includes( options.errormode ) ? options.errormode : 'exception';
+	options.errormode = [ 'exception', 'handle', 'param', 'next' ].includes( options.errormode ) ? options.errormode : 'exception';
 	options.errortitle = getSpecifiedStr( options.errortitle );
 	options.stringify = getValidTokens( options.stringify );
 
@@ -141,6 +141,9 @@ ParamParser.makeMiddleware = ( options, callback ) => {
 					break;
 				case 'handle':
 					ResultHelper.error( req, res, error, options.errortitle );
+					break;
+				case 'next':
+					next( error );
 					break;
 				// case 'exception':
 				// case undefined:

@@ -27,7 +27,7 @@ export interface ParserOptions {
 	/** An optional array or comma separated list describing the merge strategy for parameters (default: merge all -> params, query, body) */
 	merge?: string | string[];
 	/** Defines how to handle errors: with `exception` an exception is thrown and the handling is done by express, with `handle` the result is handled internally using a `resultHelper`, with `param` the error information is returned in `res.params` (default: exception) */
-	errormode?: 'exception' | 'handle' | 'param';
+	errormode?: 'exception' | 'handle' | 'param' | 'next';
 	/** Alternative title of the error in response if any error occurs (default: none) */
 	errortitle?: string;
 	/** An optional array or comma separated list of parametres to JSON.stringify (default: empty) */
@@ -49,7 +49,7 @@ export interface ConsolidatedParserOptions {
 	/** An array describing the merge strategy for parameters */
 	merge: string[];
 	/** Defines how to handle errors: with `exception` an exception is thrown and the handling is done by express, with `handle` the result is handled internally using a `resultHelper`, with `param` the error information is returned in `res.params` */
-	errormode: 'exception' | 'handle' | 'param';
+	errormode: 'exception' | 'handle' | 'param' | 'next';
 	/** Alternative title of the error in response if any error occurs (default: none) */
 	errortitle?: string;
 	/** An array of parametres to JSON.stringify */
