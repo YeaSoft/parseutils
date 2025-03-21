@@ -13,32 +13,20 @@
 		"type": "git",
 		"url": "https://github.com/YeaSoft/parseutils.git"
 	},
-	"eslintConfig": {
-		"env": {
-			"es6": true,
-			"node": true
-		},
-		"extends": "eslint:recommended",
-		"globals": {
-			"Atomics": "readonly",
-			"SharedArrayBuffer": "readonly"
-		},
-		"parserOptions": {
-			"ecmaVersion": 2020
-		},
-		"rules": {}
-	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"dependencies": {
-		"@types/express": "^4.17.13",
-		"@types/node": "^18.0.3",
 		"@yeasoft/baseutils": "^0.42.0",
-		"@yeasoft/fetchutils": "^0.19.0",
-		"deepmerge": "^4.2.2"
+		"@yeasoft/fetchutils": "^1.0.1",
+		"deepmerge": "^4.3.1"
 	},
 	"devDependencies": {
-		"eslint": "^8.19.0"
+		"@eslint/js": "^9.22.0",
+		"@types/express": "^4.17.21",
+		"@types/node": "^20.14.8",
+		"eslint": "^9.22.0",
+		"globals": "^15.14.0",
+		"typescript-eslint": "^8.27.0"
 	}
 }

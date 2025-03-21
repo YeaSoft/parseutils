@@ -7,19 +7,19 @@ well as in other code parts.
 
 The library may be added to any project with the following command:
 
-````
+````sh
 # npm install @yeasoft/parseutils
 ````
 
 ## NOTICE
 
-````
+````none
 Heavy work in progress. Most of the documentation is currently
 only available in the corresponding .d.ts files
 ````
 
-Learning by example:
---------------------
+Learning by example
+-------------------
 
 Since the module is in a very early stage, there is no real documentation.
 Here some examples:
@@ -31,12 +31,12 @@ const { ParamParser, HttpStatusError, resultHelper } = require( "@yeasoft/parseu
 const { getSpecifiedStr } = require( "@yeasoft/baseutils" );
 
 function test( name, result ) {
-	if ( result.error instanceof Error ) {
-		console.error( `${name} failed:`, result.error );
-	}
-	else {
-		console.log( `${name} passed:`, result );
-	}
+    if ( result.error instanceof Error ) {
+        console.error( `${name} failed:`, result.error );
+    }
+    else {
+        console.log( `${name} passed:`, result );
+    }
 }
 
 let parser = new ParamParser( { errormode: 'param' } );
@@ -45,12 +45,12 @@ let parser = new ParamParser( { errormode: 'param' } );
 parser.setValidator( "from,to,cc,bcc", "email" );
 // add your own validator for parameters "subject", "text" and "html"
 parser.setValidator( "subject,text,html", ( params, property ) => {
-	if ( typeof params[ property ] === 'string' ) {
-		let subject = params[ property ].toLowerCase();
-		if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
-			throw new HttpStatusError( "Mind your language", 451 );
-		}
-	}
+    if ( typeof params[ property ] === 'string' ) {
+        let subject = params[ property ].toLowerCase();
+        if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
+            throw new HttpStatusError( "Mind your language", 451 );
+        }
+    }
 } );
 // add your own transformer that makes sure you have a subject
 parser.setTransformer( "subject", ( params, property ) => { params[ property ] = getSpecifiedStr( params[ property ], "No Subject" ); } );
@@ -86,12 +86,12 @@ let emailParser = new ParamParser( { methods: "GET,POST", errormode: 'exception'
 parser.setValidator( "from,to,cc,bcc", "email" );
 // add your own validator
 parser.setValidator( "subject,text,html", ( params, property ) => {
-	if ( typeof params[ property ] === 'string' ) {
-		let subject = params[ property ].toLowerCase();
-		if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
-			throw new HttpStatusError( "Mind your language", 451 );
-		}
-	}
+    if ( typeof params[ property ] === 'string' ) {
+        let subject = params[ property ].toLowerCase();
+        if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
+            throw new HttpStatusError( "Mind your language", 451 );
+        }
+    }
 } );
 // add your own transformer that makes sure you have a subject
 parser.setTransformer( "subject", ( params, property ) => { params[ property ] = getSpecifiedStr( params[ property ], "No Subject" ); } );
@@ -100,11 +100,11 @@ parser.setTransformer( "subject", ( params, property ) => { params[ property ] =
 
 // register routes for sending mails
 httpd.all( [ 'api/send/:from/:to/:subject', 'api/send' ], parser.only(), ( req, res ) => {
-	// you do have to care on parameter errors -> the parser throws an exception and everything is done by express
+    // you do have to care on parameter errors -> the parser throws an exception and everything is done by express
 
-	// regardless of the method and way of passing the parameters (url, query params, body): everything is in req.params
-	sendMyMail( req.params, ( error, result ) => {
-		resultHelper.handle( req, res, error, result, 200 );
-	} );
+    // regardless of the method and way of passing the parameters (url, query params, body): everything is in req.params
+    sendMyMail( req.params, ( error, result ) => {
+        resultHelper.handle( req, res, error, result, 200 );
+    } );
 } );
 ```
