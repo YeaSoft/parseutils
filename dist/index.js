@@ -1,7 +1,7 @@
 // activate strict mode
 'use strict';
 
-const { HttpStatusError } = require( '@yeasoft/fetchutils' );
+const { HttpStatusError } = require( '@yeasoft/basetypes' );
 const { ParamParser } = require( './param-parser.js' );
 const { ResultHelper } = require( './result-helper.js' );
 

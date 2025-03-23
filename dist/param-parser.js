@@ -4,7 +4,7 @@
 // library modules
 const merge = require( 'deepmerge' );
 const { getSpecifiedStr, getValidObj, getValidTokens, testUUID, testSHA2, testEmail } = require( '@yeasoft/baseutils' );
-const { HttpStatusError } = require( '@yeasoft/fetchutils' );
+const { HttpStatusError } = require( '@yeasoft/basetypes' );
 
 // local modules
 const { ResultHelper } = require( './result-helper.js' );
