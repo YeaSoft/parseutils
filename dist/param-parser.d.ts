@@ -116,15 +116,62 @@ export class ParamParser {
 	 * @param validator Validator function to attach
 	 */
 	setValidator( name: string | string[], validator: ( params: Object, property: string, options: ConsolidatedParserOptions ) => void ): void;
+	/**
+	 * Adds the predefined UUID validator function to the parameter parser
+	 *
+	 * This validator function checks the specified parameters for beeing a UUID
+	 * If not, a {@link HttpStatusError} is thrown.
+	 *
+	 * @param name An array or comma separated list of parameter names
+	 * @param validator Name of the predefined validator function
+	 */
+	setValidator( name: string | string[], validator: "uuid" ): void;
+	/**
+	 * Adds the predefined SHA256 validator function to the parameter parser
+	 *
+	 * This validator function checks the specified parameters for beeing a SHA256 hash
+	 * If not, a {@link HttpStatusError} is thrown.
+	 *
+	 * @param name An array or comma separated list of parameter names
+	 * @param validator Name of the predefined validator function
+	 */
+	setValidator( name: string | string[], validator: "sha2" ): void;
+	/**
+	 * Adds the predefined email validator function to the parameter parser
+	 *
+	 * This validator function checks the specified parameters for beeing a valid email address
+	 * If not, a {@link HttpStatusError} is thrown.
+	 *
+	 * @param name An array or comma separated list of parameter names
+	 * @param validator Name of the predefined validator function
+	 */
+	setValidator( name: string | string[], validator: "email" ): void;
 
 	/**
 	 * Adds a transformer function to the parameter parser
 	 *
-	 * A validator function checks if the passed parameter meets certain criteria.
-	 * If not, a {@link HttpStatusError} is thrown.
+	 * A transformer function transforms the content of given parameters.
 	 *
 	 * @param name An array or comma separated list of parameter names
 	 * @param transformer Transformer function to attach
 	 */
 	setTransformer( name: string | string[], transformer: ( params: Object, property: string, options: ConsolidatedParserOptions ) => void ): void;
+	/**
+	 * Adds the predefined lowerize transformer function to the parameter parser
+	 *
+	 * This transformer function converts specified parameters to lowercase
+	 *
+	 * @param name An array or comma separated list of parameter names
+	 * @param transformer Name of the predfined transformer function
+	 */
+	setTransformer( name: string | string[], transformer: "lower" ): void;
+	/**
+	 * Adds the predefined upperize transformer function to the parameter parser
+	 *
+	 * This transformer function converts specified parameters to uppercase
+	 *
+	 * @param name An array or comma separated list of parameter names
+	 * @param transformer Name of the predfined transformer function
+	 */
+	setTransformer( name: string | string[], transformer: "upper" ): void;
 }
