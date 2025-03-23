@@ -7,16 +7,16 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Test",
+			"name": "Launch ParamParser Test",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
-			"program": "${workspaceFolder}/test/param-parser.js",
-			"console": "internalConsole",
+			"program": "${workspaceFolder}/debug/param-parser.js",
+			"console": "integratedTerminal",
 			"outFiles": [
 				"${workspaceFolder}/**/*.js"
 			],
-			"args": [],
+			"args": [ ],
 			"runtimeArgs": [
 				"--preserve-symlinks"
 			],

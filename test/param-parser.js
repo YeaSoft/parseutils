@@ -1,44 +1,86 @@
-const { ParamParser } = require( "../dist/param-parser.js" );
-const { getSpecifiedStr } = require( "@yeasoft/baseutils" );
-const { HttpStatusError } = require( "@yeasoft/fetchutils" );
+'use strict';
 
-function test( name, result ) {
-	if ( result.error instanceof Error ) {
-		console.error( `${name} failed:`, result.error );
-	}
-	else {
-		console.log( `${name} passed:`, result );
-	}
+const test = require( 'node:test' );
+const assert = require( 'node:assert' );
+
+const { getSpecifiedStr } = require( "@yeasoft/baseutils" );
+const { HttpStatusError } = require( "@yeasoft/basetypes" );
+
+const { ParamParser } = require( "../dist/index.js" );
+
+function createParser() {
+	// create the parser
+	const parser = new ParamParser( { errormode: 'param' } );
+
+	// add standard email address validator for parameters "from", "to", "cc" and "bcc
+	parser.setValidator( "from,to,cc,bcc", "email" );
+	// add your own validator for parameters "subject", "text" and "html"
+	parser.setValidator( "subject,text,html", ( params, property ) => {
+		if ( typeof params[ property ] === 'string' ) {
+			let subject = params[ property ].toLowerCase();
+			if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
+				throw new HttpStatusError( "Mind your language", 451 );
+			}
+		}
+	} );
+	// add standard lowerize transformer for email fields
+	parser.setTransformer( "from,to,cc,bcc", "lower" );
+	// add your own transformer that makes sure you have a subject
+	parser.setTransformer( "subject", ( params, property ) => { params[ property ] = getSpecifiedStr( params[ property ], "No Subject" ); } );
+
+	return parser;
 }
 
-let parser = new ParamParser( { errormode: 'param' } );
+test( "Testing a ParamParser with validators and transformers", async ( t ) => {
+	const parser = createParser();
 
-// add standard email address validator for parameters "from", "to", "cc" and "bcc
-parser.setValidator( "from,to,cc,bcc", "email" );
-// add your own validator for parameters "subject", "text" and "html"
-parser.setValidator( "subject,text,html", ( params, property ) => {
-	if ( typeof params[ property ] === 'string' ) {
-		let subject = params[ property ].toLowerCase();
-		if ( [ 'fuck', 'cunt', 'motherfucker' ].some( explicitWord => subject.indexOf( explicitWord ) != -1 ) ) {
-			throw new HttpStatusError( "Mind your language", 451 );
-		}
-	}
+	t.test( "Testing allParser - test 1", () => {
+		const parseAll = parser.allParser( "from,to,subject" );
+		assert.strictEqual( parseAll( {} ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 2", () => {
+		const parseAll = parser.allParser( "from,to,subject" );
+		assert.strictEqual( parseAll( { from: "leo@yeasoft.com", subject: "Yeah!" } ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 3", () => {
+		const parseAll = parser.allParser( "from,to,subject" );
+		assert.strictEqual( parseAll( { from: "leo@yeasoft.com", to: "Yeah!" } ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 4", () => {
+		const parseAll = parser.allParser( "from,to,subject" );
+		assert.strictEqual( parseAll( { from: "leo@yeasoft.com", to: "stupid@man.com", subject: "Fuck you!" } ).error?.status, 451 );
+	} );
+
+	await t.test( "Testing onlyParser - test 5", () => {
+		const parseAll = parser.allParser( "from,to,subject" );
+		assert.strictEqual( parseAll( { from: "leo@yeasoft.com", to: "NOREPLY@yeasoft.com" } ).error, undefined );
+	} );
+
+	await t.test( "Testing allParser - test 1", () => {
+		const parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
+		assert.strictEqual( parseOnly( {} ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 2", () => {
+		const parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
+		assert.strictEqual( parseOnly( { from: "leo@yeasoft.com", subject: "Yeah!" } ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 3", () => {
+		const parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
+		assert.strictEqual( parseOnly( { from: "leo@yeasoft.com", to: "Yeah!" } ).error?.status, 400 );
+	} );
+
+	await t.test( "Testing allParser - test 4", () => {
+		const parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
+		assert.strictEqual( parseOnly( { from: "leo@yeasoft.com", to: "stupid@man.com", subject: "Fuck you!" } ).error?.status, 451 );
+	} );
+
+	await t.test( "Testing allParser - test 5", () => {
+		const parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
+		assert.strictEqual( parseOnly( { from: "leo@yeasoft.com", to: "NOREPLY@yeasoft.com" } ).error, undefined );
+	} );
 } );
-// add your own transformer that makes sure you have a subject
-parser.setTransformer( "subject", ( params, property ) => { params[ property ] = getSpecifiedStr( params[ property ], "No Subject" ); } );
-
-// create a parser that returns all parameters but requires "from" to" and "subject" to be specified. "subject" will by autogenerated by the supplied tranformer.
-let parseAll = parser.allParser( "from,to,subject" );
-test( "Test 1", parseAll( {}, "from,to" ) );
-test( "Test 2", parseAll( { from: "leo@yeasoft.com", subject: "Yeah!" } ) );
-test( "Test 3", parseAll( { from: "leo@yeasoft.com", to: "Yeah!" } ) );
-test( "Test 4", parseAll( { from: "leo@yeasoft.com", to: "stupid@man.com", subject: "Fuck you!" } ) );
-test( "Test 5", parseAll( { from: "leo@yeasoft.com", to: "sylvia@yeasoft.com" } ) );
-
-// create a parser that returns onöy the specified parameters but requires "from" and "to" to be specified.
-let parseOnly = parser.onlyParser( "from!,to!,cc,bcc,subject" );
-test( "Test 6", parseOnly( {} ) );
-test( "Test 7", parseOnly( { from: "leo@yeasoft.com", subject: "Yeah!" } ) );
-test( "Test 8", parseOnly( { from: "leo@yeasoft.com", to: "Yeah!" } ) );
-test( "Test 9", parseOnly( { from: "leo@yeasoft.com", to: "stupid@man.com", subject: "Fuck you!" } ) );
-test( "Test 10", parseOnly( { from: "leo@yeasoft.com", to: "sylvia@yeasoft.com" } ) );

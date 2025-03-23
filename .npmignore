@@ -1,6 +1,7 @@
 /.vscode
 .DS_Store
 *.tgz
+/debug
 /test
 /original
 eslint.config.mjs
