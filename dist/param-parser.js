@@ -228,8 +228,8 @@ ParamParser.validators = {
 };
 
 ParamParser.transformers = {
-	lower: ( params, property ) => { if ( typeof params[ property ] === 'string' ) params[ property ].toLowerCase(); },
-	uppper: ( params, property ) => { if ( typeof params[ property ] === 'string' ) params[ property ].toUpperCase(); },
+	lower: ( params, property ) => { if ( typeof params[ property ] === 'string' ) params[ property ] = params[ property ].toLowerCase(); },
+	uppper: ( params, property ) => { if ( typeof params[ property ] === 'string' ) params[ property ] = params[ property ].toUpperCase(); },
 };
 
 exports.ParamParser = ParamParser;
