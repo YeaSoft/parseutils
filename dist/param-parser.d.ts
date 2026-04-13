@@ -68,10 +68,10 @@ export class ParamParser {
 	constructor( options: ParserOptions );
 
 	/**
-	* Creates an express middleware that process and returns all parameters
-	*
-	* @param keydefinition An optional array or comma separated list describing which parameters are mandatory
-	*/
+	 * Creates an express middleware that process and returns all parameters
+	 *
+	 * @param keydefinition An optional array or comma separated list describing which parameters are mandatory
+	 */
 	all( keydefinition?: string | string[] ): RequestHandler;
 
 	/**

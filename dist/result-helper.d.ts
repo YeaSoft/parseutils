@@ -5,7 +5,7 @@ import { Request, Response } from "express-serve-static-core";
 /**
  * This module provides helper functions for handling the conclusion of an express request
  */
-export module ResultHelper {
+export namespace ResultHelper {
 	/**
 	 * This method finishes a successful express request
 	 *

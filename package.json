@@ -21,15 +21,15 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@yeasoft/basetypes": "^1.0.0",
-		"@yeasoft/baseutils": "^1.0.1",
+		"@yeasoft/basetypes": "^1.0.1",
+		"@yeasoft/baseutils": "^1.0.2",
 		"deepmerge": "^4.3.1"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.23.0",
+		"@eslint/js": "^10.0.1",
 		"@types/express": "^4.17.21",
 		"@types/node": "^20.14.8",
-		"eslint": "^9.23.0",
-		"globals": "^15.15.0"
+		"eslint": "^10.2.0",
+		"globals": "^17.5.0"
 	}
 }

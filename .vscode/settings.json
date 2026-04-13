@@ -1,16 +1,27 @@
 {
+    "chat.disableAIFeatures": true,
     "editor.formatOnSave": true,
     "editor.insertSpaces": false,
     "files.trimTrailingWhitespace": true,
     "css.format.enable": false,
     "html.format.enable": false,
     "json.format.keepLines": true,
-    "javascript.format.enable": true,
-    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-    "javascript.format.semicolons": "insert",
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-    "typescript.format.semicolons": "insert"
+    "js/ts.format.enabled": true,
+    "js/ts.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+    "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+    "js/ts.format.semicolons": "insert",
+    "markdownlint.config": {
+        "MD024": false
+    },
+    "[sql]": {
+        "editor.formatOnSave": false
+     },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "C_Cpp.copilotHover": "disabled"
 }
