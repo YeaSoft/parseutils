@@ -124,7 +124,7 @@ ParamParser.makeMiddleware = ( options, callback ) => {
 			if ( ( options.methods.length > 0 ) && !options.methods.includes( req.method ) ) {
 				throw new HttpStatusError( "Method Not Allowed", 405 );
 			}
-			let entities = options.merge.map( key => ( req[ key ] instanceof Object ) && !( req[ key ] instanceof Array ) ? req[ key ] : {} );
+			const entities = options.merge.map( key => ( typeof req[ key ] === 'object' ) && !( req[ key ] instanceof Array ) ? req[ key ] : {} );
 			req.params = callback( merge.all( entities ), options, req, res );
 			options.stringify.forEach( key => {
 				if ( key in req.params ) {
