@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2026-05-21
+
+### Bugfixes
+
+- Fixed broken handling of `req.params` when merging
+
 ## [1.1.1] - 2026-04-13
 
 ### Improvements
