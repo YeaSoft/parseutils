@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2026-11-19
+
+### Improvements
+
+- Updated module dependencies
+
 ## [1.1.2] - 2026-05-21
 
 ### Bugfixes
